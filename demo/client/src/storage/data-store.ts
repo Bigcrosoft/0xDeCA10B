@@ -74,6 +74,7 @@ export interface DataStore {
 	health(): Promise<DataStoreHealthStatus>
 
 	saveOriginalData(transactionHash: string, originalData: OriginalData): Promise<any>
+	removeOriginalData(transactionHash: string): Promise<RemoveResponse>
 	getOriginalData(transactionHash: string): Promise<OriginalData>
 
 	saveModelInformation(modelInformation: ModelInformation): Promise<any>

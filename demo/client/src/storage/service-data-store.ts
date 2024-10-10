@@ -33,6 +33,13 @@ export class ServiceDataStore implements DataStore {
 		})
 	}
 
+	removeOriginalData(transactionHash: string): Promise<RemoveResponse> {
+		return axios.delete(`${this.url}/api/data/${transactionHash}`).then(response => {
+			const { success } = response.data
+			return new RemoveResponse(success)
+		})
+	}
+
 	getOriginalData(transactionHash: string): Promise<OriginalData> {
 		return axios.get(`${this.url}/api/data/${transactionHash}`).then(response => {
 			const { originalData } = response.data
