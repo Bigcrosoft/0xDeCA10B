@@ -66,6 +66,21 @@ export class LocalDataStore implements DataStore {
 		})
 	}
 
+	async removeOriginalData(transactionHash: string): Promise<RemoveResponse> {
+		await this.checkOpened()
+		return new Promise((resolve, reject) => {
+			const transaction = this.db!.transaction(this.dataStoreName, 'readwrite')
+			transaction.onerror = reject
+			const dataStore = transaction.objectStore(this.dataStoreName)
+			const request = dataStore.delete(transactionHash)
+			request.onerror = reject
+			request.onsuccess = () => {
+				const success = true
+				resolve(new RemoveResponse(success))
+			}
+		})
+	}
+
 	async getOriginalData(transactionHash: string): Promise<OriginalData> {
 		await this.checkOpened()
 		return new Promise((resolve, reject) => {
